@@ -3,7 +3,7 @@
 * Download [VS Code](https://code.visualstudio.com/)
 * Open the `phi2-training` folder in VS Code
 * Press '+' while in the folder to create a new file and name it `download_phi2.py`
-* Enter the following code snippit into that file and save it:
+* Enter the following code snippit into the `download_phi2.py` file and save it:
 
 ```
 from transformers import AutoModelForCausalLM, AutoTokenizer
