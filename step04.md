@@ -179,5 +179,5 @@ print("✅ Done! Model saved to ./phi2-finetuned-final")
 ```
 cd phi2-training
 source phi2_env/bin/activate
-python download_phi2.py
+python train_phi2_final.py
 ```
