@@ -1,4 +1,6 @@
-# Write a Python program in VS Code and run it through Terminal to download Phi-2
+## Step 2: Download the Phi-2 model to your hard drive
+
+### Write a Python program in VS Code and run it through Terminal to download Phi-2
 
 * Download [VS Code](https://code.visualstudio.com/)
 * Open the `phi2-training` folder in VS Code
