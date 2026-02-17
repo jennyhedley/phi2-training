@@ -1,7 +1,7 @@
 ## Step 3: Prepare Training Documents
 
 Create a `training_data/` folder within your 'phi2-training' folder. Each `.txt` file must:
-- Be saved as **UTF-8 encoding** in VS Code
+- Be saved as **UTF-8 encoding** `txt` files in VS Code
 - Use **standard ASCII quotes** (not smart/curly quotes)
 - Have **no bibliography or works cited sections**
 - Start with metadata tags, e.g.:
@@ -17,3 +17,6 @@ or
 <|subgenre|>academic<|/subgenre|>
 
 Your actual content starts here...
+```
+
+- Recommended minimum: 50,000+ words across multiple `txt` files
