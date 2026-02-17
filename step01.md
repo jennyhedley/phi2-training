@@ -1,7 +1,7 @@
 ## Commands to enter in your Terminal (in Mac) to prepare your local environment to train a Phi-2 model for your own use
 
 # Install Homebrew if needed
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"```
 
 # Install Python
 brew install python@3.11
