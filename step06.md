@@ -7,11 +7,86 @@
 * Enter the following code snippit into the `test_model.py` file and save it:
 
 ```
+# test_model.py
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
 
+print("Loading fine-tuned model...")
+tokenizer = AutoTokenizer.from_pretrained("./phi2-merged-final", trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(
+    "./phi2-merged-final",
+    trust_remote_code=True,
+    torch_dtype=torch.float32,
+    device_map="cpu"
+)
+print("Model loaded! Ready to generate.\n")
 
+def generate(prompt, temp=0.85, max_length=500):
+    inputs = tokenizer(prompt, return_tensors="pt")
+    outputs = model.generate(
+        **inputs,
+        max_length=max_length,
+        temperature=temp,
+        do_sample=True,
+        top_p=0.92,
+        top_k=50,
+        no_repeat_ngram_size=15,  # Prevents exact sentence repetition
+        # NO repetition_penalty - allows recurring motifs!
+        pad_token_id=tokenizer.eos_token_id
+    )
+    result = tokenizer.decode(outputs[0], skip_special_tokens=True)  
+    return result.split('\n\n', 1)[-1] if '\n\n' in result else result
 
+# Test 1: Academic Writing
+print("="*60)
+print("TEST 1: Academic Writing")
+print("="*60)
+prompt1 = """<|author|>Jenny Hedley<|/author|>
+<|genre|>nonfiction<|/genre|>
+<|subgenre|>academic<|/subgenre|>
 
+The relationship between memory and"""
+print(generate(prompt1, temp=0.75, max_length=300))
+
+# Test 2: Memoir
+print("\n" + "="*60)
+print("TEST 2: Memoir")
+print("="*60)
+prompt2 = """<|author|>Jenny Hedley<|/author|>
+<|genre|>nonfiction<|/genre|>
+<|subgenre|>memoir<|/subgenre|>
+
+I remember the day"""
+print(generate(prompt2, temp=0.85, max_length=300))
+
+# Test 3: Poetry
+print("\n" + "="*60)
+print("TEST 3: Poetry")
+print("="*60)
+prompt3 = """<|author|>Jenny Hedley<|/author|>
+<|genre|>nonfiction<|/genre|>
+<|subgenre|>poetry<|/subgenre|>
+
+In the quiet"""
+print(generate(prompt3, temp=0.95, max_length=200))
+
+# Test 4: Essays
+print("\n" + "="*60)
+print("TEST 4: Essays")
+print("="*60)
+prompt4 = """<|author|>Jenny Hedley<|/author|>
+<|genre|>nonfiction<|/genre|>
+<|subgenre|>essays<|/subgenre|>
+
+What fascinates me about"""
+print(generate(prompt4, temp=0.85, max_length=300))
 ```
+
+- Edit the `<|author|>Jenny Hedley<|/author|>` tags so that your name (typed exactly as you wrote it in your training documents) appears instead
+  
+- Adjust the `subgenre` tags as needed
+
+-  Adjust the creative writing prompts to suit your work
 
 - Run the training file by entering the following command in your Terminal window:
 
