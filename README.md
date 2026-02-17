@@ -13,7 +13,7 @@ I've compiled these instructions for the benefit of other writers, academics and
 - Don't close Terminal during training
 - Loss to aim for: 1.8-2.2 (lower loss risks memorization; higher loss may not adapt to your style)
 - Training time: ~35-40 hours for 7 epochs
-- Activate virtual environment every new terminal session, while inside your 'phi2-training` folder:
+- Activate virtual environment every new terminal session, while inside your `phi2-training` folder:
   ```source phi2_env/bin/activate```
 - If training crashes, resume from latest checkpoint (Claude can help with this)
 - macOS 14+ can use device_map="mps" for faster training (ask Claude to revise code for faster processing)
