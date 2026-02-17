@@ -8,7 +8,8 @@
 
 # Create project folder
 ```mkdir phi2-training
-cd phi2-training```
+cd phi2-training
+```
 
 # Create and activate virtual environment
 ```python3 -m venv phi2_env
