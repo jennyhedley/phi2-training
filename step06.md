@@ -120,7 +120,7 @@ model = AutoModelForCausalLM.from_pretrained(
     device_map="cpu"
 )
 
-def generate_test(prompt, temp=0.85, length=1000):
+def generate_test(prompt, temp=0.85, length=500):
     inputs = tokenizer(prompt, return_tensors="pt")
     outputs = model.generate(
         **inputs,
