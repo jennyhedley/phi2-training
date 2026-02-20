@@ -104,8 +104,9 @@ python test_model.py
 
 ### Alternate testing script to write in Python and then run
 
-```# comprehensive_test.py
-# Test your current model across many scenarios
+```
+# comprehensive_test.py
+# Test current model across multiple scenarios by specifying different genres and replacing placeholder text with your own prompts
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
