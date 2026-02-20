@@ -112,27 +112,33 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
 print("Loading phi2-checkpoint100-merged...")
-tokenizer = AutoTokenizer.from_pretrained("./phi2-merged-final", trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained("./phi2-checkpoint100-merged", trust_remote_code=True)
 model = AutoModelForCausalLM.from_pretrained(
-    "./phi2-merged-final",
+    "./phi2-checkpoint100-merged",
     trust_remote_code=True,
     torch_dtype=torch.float32,
     device_map="cpu"
 )
 
-def generate_test(prompt, temp=0.85, length=500):
-    inputs = tokenizer(prompt, return_tensors="pt")
+print("Model loaded!\n")
+
+def generate_test(prompt, temp=0.85, max_tokens=700):
+    inputs = tokenizer(prompt, return_tensors="pt", truncation=True)
+    
     outputs = model.generate(
         **inputs,
-        max_length=length,
+        max_new_tokens=max_tokens,
         temperature=temp,
         top_p=0.92,
-        top_k=50,
-        no_repeat_ngram_size=15,
+        top_k=40,
         do_sample=True,
         pad_token_id=tokenizer.eos_token_id
     )
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+    
+    # Remove the prompt tokens from the output
+    generated = outputs[0][inputs["input_ids"].shape[1]:]
+    
+    return tokenizer.decode(generated, skip_special_tokens=True)
 
 # Test different prompts
 test_cases = [
@@ -158,15 +164,14 @@ for i, (subgenre, prompt_start, temp) in enumerate(test_cases, 1):
     print(f"\n{'='*70}")
     print(f"TEST {i}: {subgenre.upper()} - '{prompt_start}'")
     print('='*70)
-    
-    result = generate_test(full_prompt, temp=temp, length=350)
-    clean = result.split('\n\n', 1)[-1] if '\n\n' in result else result
-    print(clean)
+
+    result = generate_test(full_prompt, temp=temp, max_tokens=700)
+    print(result)
     print()
 
 print("\n" + "="*70)
 print("Does this sound like you? Rate each 1-10.")
 print("If most are 7+, the model is working!")
-print("If most are <5, need fresh aggressive training.")
+print("If most are <5, need more training.")
 print("="*70)
 ```
